@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Distributed Voting System</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="brand">🗳️ DVS</div>
+    <div class="nav-links">
+      <a href="#home" class="nav-link active" data-section="home">Home</a>
+      <a href="#vote" class="nav-link" data-section="vote">Vote</a>
+      <a href="#nodes" class="nav-link" data-section="nodes">Nodes</a>
+      <a href="#results" class="nav-link" data-section="results">Results</a>
+    </div>
+  </nav>
+
+  <main class="container">
+    <!-- HOME -->
+    <section id="home" class="section active">
+      <div class="hero card">
+        <h1>Distributed Voting System</h1>
+        <p class="subtitle">A Fault-Tolerant Distributed Election Platform</p>
+        <div id="systemStatus" class="system-status">CHECKING...</div>
+        <div class="stats">
+          <div class="stat"><span id="statVotes">-</span><label>Total Votes</label></div>
+          <div class="stat"><span id="statActive">-</span><label>Active Nodes</label></div>
+          <div class="stat"><span id="statSystem">-</span><label>System Status</label></div>
+          <div class="stat"><span id="statLeader">-</span><label>Current Winner</label></div>
+        </div>
+        <button class="btn btn-primary btn-lg" onclick="showSection('vote')">START VOTING</button>
+      </div>
+    </section>
+
+    <!-- VOTE -->
+    <section id="vote" class="section">
+      <div class="card narrow">
+        <h2>Cast Your Vote</h2>
+        <label for="voterId">Voter ID</label>
+        <input id="voterId" type="text" placeholder="e.g. STU1001" autocomplete="off">
+        <label>Select Candidate</label>
+        <div class="candidates">
+          <button class="candidate" data-candidate="Candidate A">Candidate A</button>
+          <button class="candidate" data-candidate="Candidate B">Candidate B</button>
+          <button class="candidate" data-candidate="Candidate C">Candidate C</button>
+        </div>
+        <button id="castBtn" class="btn btn-primary btn-block">CAST VOTE</button>
+        <div id="voteMessage" class="message hidden"></div>
+        <ul id="replicationList" class="replication"></ul>
+      </div>
+      <!-- Distributed system visualization -->
+      <div class="card narrow viz-card">
+        <h3>How your vote travels</h3>
+        <div class="topology">
+          <div class="topo-node voter">VOTER</div>
+          <div class="arrow">↓</div>
+          <div class="topo-node" id="topo1">NODE 1</div>
+          <div class="arrow">↙ &nbsp;&nbsp;&nbsp; ↘</div>
+          <div class="topo-row">
+            <div class="topo-node" id="topo2">NODE 2</div>
+            <div class="topo-node" id="topo3">NODE 3</div>
+          </div>
+        </div>
+        <ul id="flowSteps" class="flow"><li class="muted">Cast a vote to see replication step by step.</li></ul>
+      </div>
+    </section>
+
+    <!-- NODES -->
+    <section id="nodes" class="section">
+      <div class="section-head">
+        <h2>Node Dashboard</h2>
+        <div class="badge-pill">Active Nodes: <strong id="activeNodes">-</strong></div>
+      </div>
+      <div id="nodeGrid" class="grid"></div>
+      <div class="actions">
+        <button id="syncBtn" class="btn btn-primary">SYNCHRONIZE NODES</button>
+        <span id="syncMessage" class="muted"></span>
+      </div>
+    </section>
+
+    <!-- RESULTS -->
+    <section id="results" class="section">
+      <div class="card">
+        <div class="section-head">
+          <h2>Election Results</h2>
+          <div class="badge-pill">Total Votes: <strong id="totalVotes">0</strong></div>
+        </div>
+        <div id="resultBars"></div>
+        <div id="winner" class="winner">No votes yet</div>
+        <p id="resultSource" class="muted small"></p>
+      </div>
+    </section>
+
+    <!-- ACTIVITY LOG (always visible) -->
+    <div class="card log-card">
+      <div class="section-head">
+        <h3>Activity Log</h3>
+        <span class="muted small">auto-refresh every 3s</span>
+      </div>
+      <ul id="activityLog" class="log"></ul>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
